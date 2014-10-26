@@ -3,15 +3,15 @@
 
 #This function is used to create a list of functions to manage the creation and data access
 
-makeCacheMatrix <- function(X = matrix()) {             
+makeCacheMatrix <- function(X = matrix()) {            
         inv <- NULL
-        set <- function(Y) {                            #execute this function to assing the matrix for inversion. This should be the second step after makeCacheMatrix() in called. The argument contains the matrix for inversion
+        set <- function(Y) {                            #execute this function to set the matrix for inversion. This should be the second step after makeCacheMatrix() in called. The argument contains the matrix for inversion
                 X <<- Y
                 inv <<- NULL
         }
-        get <- function() X                             #execute this funcition to pull the data that was created invoking set() function
-        setinv <- function(i) inv <<-i                  #execute this funcition to cache the inversion
-        getinv <- function() inv                        #execute this funcition to pull the inverted value
+        get <- function() X                             #execute this function to pull the data that was created invoking set() function
+        setinv <- function(i) inv <<-i                  #execute this function to cache the inversion
+        getinv <- function() inv                        #execute this function to pull the inverted value
         list(set = set, get = get,                      #return the list pointing to the functions
              setinv = setinv,
              getinv = getinv)
@@ -19,13 +19,13 @@ makeCacheMatrix <- function(X = matrix()) {
 
 #This function calculates inversion of a matrix using predefined functions
 
-cacheSolve <- function(x, ...) {                             
+cacheSolve <- function(x, ...) {                            
         inv <- x$getinv()                               #check if the inversion has been already calculated
         if(!is.null(inv)) {
                 message("getting cached data")
                 return(inv)
         }
-        data <- x$get()                                 #if no iversion was calculated, pull the matrix to be inverted
+        data <- x$get()                                 #if no inversion was calculated, pull the matrix to be inverted
         inv <- solve(data, ...)                              #invert the matrix
         x$setinv(inv)                                   #cache the results of the inversion
         inv
